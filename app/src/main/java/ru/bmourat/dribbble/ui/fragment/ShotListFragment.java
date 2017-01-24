@@ -16,7 +16,6 @@ import java.util.List;
 import ru.bmourat.dribbble.R;
 import ru.bmourat.dribbble.app.DribbbleApp;
 import ru.bmourat.dribbble.databinding.FragmentShotListBinding;
-import ru.bmourat.dribbble.helper.Constants;
 import ru.bmourat.dribbble.helper.PaginationTool;
 import ru.bmourat.dribbble.mvp.presenter.ShotListPresenter;
 import ru.bmourat.dribbble.mvp.view.ShotListView;
@@ -30,7 +29,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class ShotListFragment extends BaseFragment implements ShotListView {
 
-	@InjectPresenter(type = PresenterType.LOCAL, tag = ShotListPresenter.ID)
+	@InjectPresenter(type = PresenterType.GLOBAL, tag = ShotListPresenter.ID)
 	ShotListPresenter presenter;
 
 	private FragmentShotListBinding binding;
@@ -91,7 +90,7 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 		binding.pbProgress.setVisibility(visible ? View.VISIBLE : View.GONE);
 	}
 
-	@ProvidePresenter(type = PresenterType.LOCAL, tag = ShotListPresenter.ID)
+	@ProvidePresenter(type = PresenterType.GLOBAL, tag = ShotListPresenter.ID)
 	ShotListPresenter provideShotListPresenter(){
 		return new ShotListPresenter(DribbbleApp.getAppComponent().getDribbbleRepository());
 	}
