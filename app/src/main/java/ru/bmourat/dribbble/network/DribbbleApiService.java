@@ -16,5 +16,5 @@ public interface DribbbleApiService {
 	String baseAddress = "https://api.dribbble.com/v1/";
 
 	@GET("shots")
-	Call<List<Shot>> getShots(@Query("access_token") String accessToken);
+	Call<List<Shot>> getShots(@Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 }

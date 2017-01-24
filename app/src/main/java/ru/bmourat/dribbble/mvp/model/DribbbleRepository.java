@@ -10,5 +10,5 @@ import rx.Observable;
  */
 
 public interface DribbbleRepository {
-	Observable<List<Shot>> getShots();
+	Observable<List<Shot>> getShots(int page);
 }

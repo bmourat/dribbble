@@ -16,6 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 import ru.bmourat.dribbble.R;
 import ru.bmourat.dribbble.mvp.model.DribbbleRepository;
+import ru.bmourat.dribbble.mvp.model.Settings;
 import ru.bmourat.dribbble.network.DribbbleApiService;
 import ru.bmourat.dribbble.network.RemoteDribbbleRepository;
 import ru.bmourat.dribbble.network.moshi.DribbbleMoshiAdapterFactory;
@@ -60,6 +61,7 @@ public class AppModule {
 	@Singleton
 	DribbbleRepository provideDribbbleRepository(DribbbleApiService apiService){
 		String clientAccessToken = context.getResources().getString(R.string.client_access_token);
-		return new RemoteDribbbleRepository(apiService, clientAccessToken);
+		int numberOfShotsPerPage = context.getResources().getInteger(R.integer.pageSize);
+		return new RemoteDribbbleRepository(apiService, new Settings(clientAccessToken, numberOfShotsPerPage));
 	}
 }

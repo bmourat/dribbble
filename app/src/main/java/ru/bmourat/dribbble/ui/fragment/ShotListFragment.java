@@ -13,12 +13,16 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 
 import java.util.List;
 
+import ru.bmourat.dribbble.R;
 import ru.bmourat.dribbble.app.DribbbleApp;
 import ru.bmourat.dribbble.databinding.FragmentShotListBinding;
+import ru.bmourat.dribbble.helper.Constants;
+import ru.bmourat.dribbble.helper.PaginationTool;
 import ru.bmourat.dribbble.mvp.presenter.ShotListPresenter;
 import ru.bmourat.dribbble.mvp.view.ShotListView;
 import ru.bmourat.dribbble.network.model.Shot;
 import ru.bmourat.dribbble.ui.adapter.ShotListAdapter;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by BM on 1/24/17.
@@ -30,6 +34,8 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 	ShotListPresenter presenter;
 
 	private FragmentShotListBinding binding;
+	private PaginationTool paginationTool;
+	private CompositeSubscription subscriptions = new CompositeSubscription();
 	private ShotListAdapter shotListAdapter = new ShotListAdapter();
 
 	public ShotListFragment() {}
@@ -46,7 +52,7 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 		super.onCreate(savedInstanceState);
 
 		if(savedInstanceState == null){
-			presenter.loadShotList(false);
+			presenter.loadShotList(1, false);
 		}
 	}
 
@@ -62,17 +68,32 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 		super.onViewCreated(view, savedInstanceState);
 		binding.rvShotList.setLayoutManager(new LinearLayoutManager(getActivity()));
 		binding.rvShotList.setAdapter(shotListAdapter);
+
+		int currentPage = 1;
+		if(savedInstanceState != null){
+			currentPage = savedInstanceState.getInt(Constants.PAGE_BUNDLE_KEY);
+		}
+		paginationTool = new PaginationTool(binding.rvShotList, currentPage, getResources().getInteger(R.integer.pageSize));
+		subscriptions.add(paginationTool.getPagingObservable().distinct().subscribe(page -> presenter.loadShotList(page, false)));
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(Constants.PAGE_BUNDLE_KEY, paginationTool.getCurrentPage());
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		binding = null;
+		subscriptions.clear();
 	}
 
 	@Override
 	public void showShotList(List<Shot> shotList) {
 		shotListAdapter.addShots(shotList);
+		paginationTool.incrementCurrentPage();
 	}
 
 	@Override

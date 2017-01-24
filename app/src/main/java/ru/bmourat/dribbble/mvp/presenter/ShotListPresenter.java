@@ -27,8 +27,8 @@ public class ShotListPresenter extends MvpPresenter<ShotListView> {
 		this.repository = repository;
 	}
 
-	public void loadShotList(boolean animated){
-		repository.getShots()
+	public void loadShotList(int page, boolean animated){
+		repository.getShots(page)
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.doOnSubscribe(() -> getViewState().showLoading(true))

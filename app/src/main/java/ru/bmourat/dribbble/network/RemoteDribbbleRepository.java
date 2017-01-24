@@ -3,6 +3,7 @@ package ru.bmourat.dribbble.network;
 import java.util.List;
 
 import ru.bmourat.dribbble.mvp.model.DribbbleRepository;
+import ru.bmourat.dribbble.mvp.model.Settings;
 import ru.bmourat.dribbble.network.model.Shot;
 import rx.Observable;
 
@@ -12,16 +13,20 @@ import rx.Observable;
 
 public class RemoteDribbbleRepository implements DribbbleRepository {
 
-	private String clientAccessToken;
+	private Settings settings;
 	private DribbbleApiService apiService;
 
-	public RemoteDribbbleRepository(DribbbleApiService apiService, String clientAccessToken){
+	public RemoteDribbbleRepository(DribbbleApiService apiService, Settings settings){
 		this.apiService = apiService;
-		this.clientAccessToken = clientAccessToken;
+		this.settings = settings;
 	}
 
 	@Override
-	public Observable<List<Shot>> getShots() {
-		return Observable.fromCallable(() -> apiService.getShots(clientAccessToken).execute().body());
+	public Observable<List<Shot>> getShots(int page) {
+		return Observable.fromCallable(() -> apiService.getShots(page,
+				settings.getNumberOfShotsPerPage(),
+				settings.getClientAccessToken())
+			.execute().body()
+		);
 	}
 }
