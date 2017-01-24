@@ -7,6 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
+/**
+ * PaginationTool - class for implementing pagination in RecyclerView
+ * Takes recyclerView and adds scroll listener
+ */
 
 public class PaginationTool {
 
