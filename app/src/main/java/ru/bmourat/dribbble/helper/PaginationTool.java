@@ -56,4 +56,8 @@ public class PaginationTool {
 	public void incrementCurrentPage() {
 		currentPage++;
 	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
 }

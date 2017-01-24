@@ -30,7 +30,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by BM on 1/24/17.
  */
 
-public class ShotListFragment extends BaseFragment implements ShotListView {
+public class ShotListFragment extends BaseFragment implements ShotListView{
 
 	@InjectPresenter(type = PresenterType.GLOBAL, tag = ShotListPresenter.ID)
 	ShotListPresenter presenter;
@@ -68,11 +68,18 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+
 		binding.rvShotList.setLayoutManager(new LinearLayoutManager(getActivity()));
 		binding.rvShotList.setAdapter(shotListAdapter);
 
 		paginationTool = new PaginationTool(binding.rvShotList, 1, getResources().getInteger(R.integer.pageSize));
 		subscriptions.add(paginationTool.getPagingObservable().distinct().subscribe(page -> presenter.loadShotList(page, false)));
+
+		binding.srlSwipe.setOnRefreshListener(() -> {
+			shotListAdapter.clear();
+			paginationTool.setCurrentPage(1);
+			presenter.loadShotList(1, false);
+		});
 	}
 
 	@Override
@@ -86,6 +93,7 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 	public void showShotList(List<Shot> shotList) {
 		shotListAdapter.addShots(shotList);
 		paginationTool.incrementCurrentPage();
+		binding.srlSwipe.setRefreshing(false);
 	}
 
 	@Override

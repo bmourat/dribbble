@@ -2,13 +2,11 @@ package ru.bmourat.dribbble.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.bmourat.dribbble.R;
 import ru.bmourat.dribbble.databinding.ItemShotBinding;
 import ru.bmourat.dribbble.network.model.Shot;
 
@@ -23,6 +21,9 @@ public class ShotListAdapter extends RecyclerView.Adapter<ShotListAdapter.ShotVi
 	public void addShots(List<Shot> items){
 		shotList.addAll(items);
 		notifyDataSetChanged();
+	}
+	public void clearAllShots() {
+		shotList.clear();
 	}
 
 	@Override
@@ -39,6 +40,10 @@ public class ShotListAdapter extends RecyclerView.Adapter<ShotListAdapter.ShotVi
 	@Override
 	public int getItemCount() {
 		return shotList.size();
+	}
+
+	public void clear() {
+
 	}
 
 	class ShotViewHolder extends RecyclerView.ViewHolder{
