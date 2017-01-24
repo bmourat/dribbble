@@ -69,18 +69,8 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 		binding.rvShotList.setLayoutManager(new LinearLayoutManager(getActivity()));
 		binding.rvShotList.setAdapter(shotListAdapter);
 
-		int currentPage = 1;
-		if(savedInstanceState != null){
-			currentPage = savedInstanceState.getInt(Constants.PAGE_BUNDLE_KEY);
-		}
-		paginationTool = new PaginationTool(binding.rvShotList, currentPage, getResources().getInteger(R.integer.pageSize));
+		paginationTool = new PaginationTool(binding.rvShotList, 1, getResources().getInteger(R.integer.pageSize));
 		subscriptions.add(paginationTool.getPagingObservable().distinct().subscribe(page -> presenter.loadShotList(page, false)));
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(Constants.PAGE_BUNDLE_KEY, paginationTool.getCurrentPage());
 	}
 
 	@Override

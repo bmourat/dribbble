@@ -53,10 +53,6 @@ public class PaginationTool {
 		}
 	};
 
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
 	public void incrementCurrentPage() {
 		currentPage++;
 	}
