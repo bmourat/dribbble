@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.PresenterType;
@@ -21,6 +22,8 @@ import ru.bmourat.dribbble.mvp.presenter.ShotListPresenter;
 import ru.bmourat.dribbble.mvp.view.ShotListView;
 import ru.bmourat.dribbble.network.model.Shot;
 import ru.bmourat.dribbble.ui.adapter.ShotListAdapter;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -90,8 +93,13 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 		binding.pbProgress.setVisibility(visible ? View.VISIBLE : View.GONE);
 	}
 
+	@Override
+	public void showError(String message) {
+		Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+	}
+
 	@ProvidePresenter(type = PresenterType.GLOBAL, tag = ShotListPresenter.ID)
 	ShotListPresenter provideShotListPresenter(){
-		return new ShotListPresenter(DribbbleApp.getAppComponent().getDribbbleRepository());
+		return new ShotListPresenter(DribbbleApp.getAppComponent().getDribbbleRepository(), Schedulers.io(), AndroidSchedulers.mainThread());
 	}
 }

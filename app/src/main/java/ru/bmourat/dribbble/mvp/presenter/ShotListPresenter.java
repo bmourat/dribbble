@@ -10,6 +10,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import ru.bmourat.dribbble.mvp.model.DribbbleRepository;
 import ru.bmourat.dribbble.mvp.view.ShotListView;
 import rx.Observable;
+import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -21,22 +22,28 @@ public class ShotListPresenter extends MvpPresenter<ShotListView> {
 
 	public static final String ID = "ShotListPresenter";
 
+	private Scheduler subscribeScheduler, observeScheduler;
 	private DribbbleRepository repository;
 
-	public ShotListPresenter(DribbbleRepository repository) {
+	public ShotListPresenter(DribbbleRepository repository, Scheduler subscribeScheduler, Scheduler observeScheduler) {
 		this.repository = repository;
+		this.subscribeScheduler = subscribeScheduler;
+		this.observeScheduler = observeScheduler;
 	}
 
 	public void loadShotList(int page, boolean animated){
 		repository.getShots(page)
-			.subscribeOn(Schedulers.io())
-			.observeOn(AndroidSchedulers.mainThread())
+			.subscribeOn(subscribeScheduler)
+			.observeOn(observeScheduler)
 			.doOnSubscribe(() -> getViewState().showLoading(true))
 			.doOnTerminate(() -> getViewState().showLoading(false))
 			.map(shots -> Stream.of(shots).filter(shot -> shot.animated() == animated).collect(Collectors.toList()))
 			.subscribe(
 				shotList -> getViewState().showShotList(shotList),
-				error -> Log.e(ID, "Error fetching shot list",error)
+				error -> {
+					Log.e(ID, "Error fetching shot list",error);
+					getViewState().showError("Error fetching shot list. Try again later!");
+				}
 			);
 	}
 }

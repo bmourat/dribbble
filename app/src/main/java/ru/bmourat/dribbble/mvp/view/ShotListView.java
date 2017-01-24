@@ -13,4 +13,5 @@ import ru.bmourat.dribbble.network.model.Shot;
 public interface ShotListView extends MvpView {
 	void showShotList(List<Shot> shotList);
 	void showLoading(boolean visible);
+	void showError(String message);
 }
