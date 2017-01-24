@@ -1,7 +1,9 @@
-package ru.bmourat.dribbble;
+package ru.bmourat.dribbble.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import ru.bmourat.dribbble.R;
 
 public class MainActivity extends AppCompatActivity {
 
