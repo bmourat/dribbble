@@ -18,6 +18,7 @@ import ru.bmourat.dribbble.databinding.FragmentShotListBinding;
 import ru.bmourat.dribbble.mvp.presenter.ShotListPresenter;
 import ru.bmourat.dribbble.mvp.view.ShotListView;
 import ru.bmourat.dribbble.network.model.Shot;
+import ru.bmourat.dribbble.ui.adapter.ShotListAdapter;
 
 /**
  * Created by BM on 1/24/17.
@@ -25,10 +26,11 @@ import ru.bmourat.dribbble.network.model.Shot;
 
 public class ShotListFragment extends BaseFragment implements ShotListView {
 
-	private FragmentShotListBinding binding;
-
 	@InjectPresenter(type = PresenterType.LOCAL, tag = ShotListPresenter.ID)
 	ShotListPresenter presenter;
+
+	private FragmentShotListBinding binding;
+	private ShotListAdapter shotListAdapter = new ShotListAdapter();
 
 	public ShotListFragment() {}
 
@@ -59,6 +61,7 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		binding.rvShotList.setLayoutManager(new LinearLayoutManager(getActivity()));
+		binding.rvShotList.setAdapter(shotListAdapter);
 	}
 
 	@Override
@@ -69,7 +72,7 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 
 	@Override
 	public void showShotList(List<Shot> shotList) {
-
+		shotListAdapter.addShots(shotList);
 	}
 
 	@Override

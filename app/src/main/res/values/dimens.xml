@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="margin_8">8dp</dimen>
     <dimen name="height_shot_image">200dp</dimen>
-    <dimen name="height_shot_info">60dp</dimen>
-    <dimen name="margin_4dp">4dp</dimen>
+    <dimen name="height_shot_info">64dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
     <dimen name="size_shot_title">18sp</dimen>
 </resources>

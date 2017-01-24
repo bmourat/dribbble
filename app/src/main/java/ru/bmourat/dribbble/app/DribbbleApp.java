@@ -2,6 +2,8 @@ package ru.bmourat.dribbble.app;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import ru.bmourat.dribbble.di.AppComponent;
 import ru.bmourat.dribbble.di.AppModule;
 import ru.bmourat.dribbble.di.DaggerAppComponent;
@@ -17,6 +19,7 @@ public class DribbbleApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Fresco.initialize(this);
 		appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
 	}
 	public static AppComponent getAppComponent(){

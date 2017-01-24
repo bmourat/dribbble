@@ -55,7 +55,7 @@ dependencies {
 
     compile 'com.arello-mobile:moxy:1.4.5'
     compile 'com.arello-mobile:moxy-android:1.4.5'
-    annotationProcessor 'com.arello-mobile:moxy-compiler:1.4.5'
+    provided 'com.arello-mobile:moxy-compiler:1.4.5'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

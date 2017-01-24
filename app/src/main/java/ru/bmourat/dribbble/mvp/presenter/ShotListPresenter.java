@@ -2,6 +2,7 @@ package ru.bmourat.dribbble.mvp.presenter;
 
 import android.util.Log;
 
+import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
 import ru.bmourat.dribbble.mvp.model.DribbbleRepository;
@@ -12,7 +13,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by BM on 1/24/17.
  */
-
+@InjectViewState
 public class ShotListPresenter extends MvpPresenter<ShotListView> {
 
 	public static final String ID = "ShotListPresenter";
