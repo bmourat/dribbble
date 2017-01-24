@@ -13,6 +13,7 @@ import ru.bmourat.dribbble.R;
 
 /**
  * Created by BM on 10/25/16.
+ * Class for setting ProgressBar color in layout
  */
 
 public class ColoredProgressBar extends ProgressBar {

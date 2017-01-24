@@ -9,7 +9,9 @@ import rx.subjects.PublishSubject;
 
 /**
  * PaginationTool - class for implementing pagination in RecyclerView
- * Takes recyclerView and adds scroll listener
+ * Takes recyclerView and adds scroll listener, calculates if we need to
+ * load additional portion of data, and if we do, emits page number on
+ * PublishSubject
  */
 
 public class PaginationTool {
