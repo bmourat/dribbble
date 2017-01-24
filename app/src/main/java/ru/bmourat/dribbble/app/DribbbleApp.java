@@ -19,4 +19,7 @@ public class DribbbleApp extends Application {
 		super.onCreate();
 		appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
 	}
+	public static AppComponent getAppComponent(){
+		return appComponent;
+	}
 }

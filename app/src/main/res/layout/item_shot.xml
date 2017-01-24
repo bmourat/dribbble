@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="shot"
+            type="ru.bmourat.dribbble.network.model.Shot"/>
+    </data>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_shot_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_shot_image"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_shot_info"
+            android:orientation="vertical"
+            android:background="@color/background_shot_info"
+            android:layout_gravity="bottom">
+            <TextView
+                android:id="@+id/tv_shot_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_4dp"
+                android:layout_marginStart="@dimen/margin_4dp"
+                android:layout_marginLeft="@dimen/margin_4dp"
+                android:textSize="@dimen/size_shot_title"
+                android:textColor="@color/shot_title"
+                android:textStyle="bold"
+                android:text="@{shot.title()}"
+                tools:text="Shot Title"/>
+            <TextView
+                android:id="@+id/tv_shot_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_4dp"
+                android:layout_marginLeft="@dimen/margin_4dp"
+                android:maxLines="@integer/shot_description_max_lines"
+                android:ellipsize="end"
+                android:textColor="@color/shot_description"
+                android:text="@{shot.description()}"
+                tools:text="Very long long long long long long long long long long long long long long long long long long long lo long lo ng lon g long long description"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</layout>
