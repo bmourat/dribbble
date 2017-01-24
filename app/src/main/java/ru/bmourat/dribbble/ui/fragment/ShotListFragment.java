@@ -46,7 +46,7 @@ public class ShotListFragment extends BaseFragment implements ShotListView {
 		super.onCreate(savedInstanceState);
 
 		if(savedInstanceState == null){
-			presenter.loadShotList();
+			presenter.loadShotList(false);
 		}
 	}
 

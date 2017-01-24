@@ -20,6 +20,8 @@ public abstract class Shot {
 
 	public abstract ImageContainer images();
 
+	public abstract Boolean animated();
+
 	public static JsonAdapter<Shot> jsonAdapter(Moshi moshi) {
 		return new AutoValue_Shot.MoshiJsonAdapter(moshi);
 	}
