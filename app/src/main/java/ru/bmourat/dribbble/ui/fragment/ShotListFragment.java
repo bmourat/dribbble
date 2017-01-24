@@ -73,13 +73,9 @@ public class ShotListFragment extends BaseFragment implements ShotListView{
 		binding.rvShotList.setAdapter(shotListAdapter);
 
 		paginationTool = new PaginationTool(binding.rvShotList, 1, getResources().getInteger(R.integer.pageSize));
-		subscriptions.add(paginationTool.getPagingObservable().distinct().subscribe(page -> presenter.loadShotList(page, false)));
+		subscriptions.add(paginationTool.getPagingObservable().distinctUntilChanged().subscribe(page -> {if(page > 0) presenter.loadShotList(page, false);}));
 
-		binding.srlSwipe.setOnRefreshListener(() -> {
-			shotListAdapter.clear();
-			paginationTool.setCurrentPage(1);
-			presenter.loadShotList(1, false);
-		});
+		binding.srlSwipe.setOnRefreshListener(() -> paginationTool.setCurrentPage(1) );
 	}
 
 	@Override
@@ -91,9 +87,15 @@ public class ShotListFragment extends BaseFragment implements ShotListView{
 
 	@Override
 	public void showShotList(List<Shot> shotList) {
-		shotListAdapter.addShots(shotList);
+
+		if(binding.srlSwipe.isRefreshing()){
+			shotListAdapter.replaceShots(shotList);
+			binding.srlSwipe.setRefreshing(false);
+		} else {
+			shotListAdapter.addShots(shotList);
+		}
 		paginationTool.incrementCurrentPage();
-		binding.srlSwipe.setRefreshing(false);
+
 	}
 
 	@Override

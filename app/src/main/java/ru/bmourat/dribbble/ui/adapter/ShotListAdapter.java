@@ -22,8 +22,10 @@ public class ShotListAdapter extends RecyclerView.Adapter<ShotListAdapter.ShotVi
 		shotList.addAll(items);
 		notifyDataSetChanged();
 	}
-	public void clearAllShots() {
+	public void replaceShots(List<Shot> items) {
 		shotList.clear();
+		shotList.addAll(items);
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -40,10 +42,6 @@ public class ShotListAdapter extends RecyclerView.Adapter<ShotListAdapter.ShotVi
 	@Override
 	public int getItemCount() {
 		return shotList.size();
-	}
-
-	public void clear() {
-
 	}
 
 	class ShotViewHolder extends RecyclerView.ViewHolder{
